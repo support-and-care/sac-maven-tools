@@ -12,7 +12,7 @@ sources/
 studies/
 svn/
 # Our stuff
-.envrc
+.envrc*
 .m2/repository/
 .sdkmanrc
 jqassistant/store/
