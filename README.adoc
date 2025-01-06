@@ -1,0 +1,26 @@
+= Maven Support & Care Tools
+:icons: font
+:toc: left
+
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+This repository contains a collection of tools and scripts to support the maintenance and care of Maven projects.
+
+== Prerequisites
+
+=== Check out Maven source code
+
+Follow the instructions in https://maven.apache.org/scm.html[Maven SCM documentation] to check out Maven to this directory.
+
+== Common Tools
+
+The following tools are available in the `bin` directory (and have inherent documentation).
+
+* link:bin/gh-subscribe[gh-subscribe] - Subscribe to a GitHub repository (watch)
+* link:bin/run-maven[run-maven] - Execute Maven goals for multiple projects

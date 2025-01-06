@@ -1,0 +1,46 @@
+#!/usr/bin/env bash
+
+set -eu -o pipefail
+
+# NAME
+#     gh-subscribe - Subscribe to notifications for GitHub repositories.
+#
+# SYNOPSIS
+#     ./gh-subscribe
+#
+# DESCRIPTION
+#     This script retrieves a list of remote GitHub repositories associated with the current Git project
+#     and automatically subscribes to notifications for these repositories using the GitHub API.
+#
+# REQUIREMENTS
+#     - The script requires a valid GitHub token to be set in the environment variable GITHUB_TOKEN.
+#     - curl utility is required for API requests.
+#
+# USAGE
+#     To run this script, navigate to a Git repository and execute:
+#         ./gh-subscribe
+#
+#     Ensure that the `GITHUB_TOKEN` environment variable is exported with a valid personal access token
+#     before running this script.
+#
+# EXAMPLES
+#     $ export GITHUB_TOKEN=your_personal_access_token
+#     $ ./gh-subscribe
+#
+# NOTES
+#     - The script subscribes you to all repositories listed in your Git remotes.
+#     - Existing subscription settings will be updated to ensure notifications are enabled
+#       and ignored topics are turned off.
+#```
+
+owner_repos="$(git remote -v | sed -E 's#.*(github\.com[:/])([^/]+)/([^.]+).*#\2/\3#g' | sort -u)"
+
+for owner_repo in ${owner_repos}; do
+  curl -L \
+    -X PUT \
+    -H "Accept: application/vnd.github+json" \
+    -H "Authorization: Bearer ${GITHUB_TOKEN}" \
+    -H "X-GitHub-Api-Version: 2022-11-28" \
+    "https://api.github.com/repos/${owner_repo}/subscription" \
+    -d '{"subscribed":true,"ignored":false}'
+done

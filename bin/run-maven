@@ -1,0 +1,44 @@
+#!/bin/bash
+
+set -eu -o pipefail
+
+# This script executes Maven goals for multiple projects with specific options and configurations.
+#
+# SYNOPSIS
+#   run-maven [Maven goals...]
+#
+# DESCRIPTION
+#   This script automates the execution of Maven goals for a list of projects defined
+#   in an environment variable `PROJECTS`. It ensures that Maven uses a specific local
+#   repository directory and applies provided goals across all projects sequentially.
+#
+#   The script reads common functions from the `common-functions.sh` file located in the
+#   same directory as the script itself.
+#
+# USAGE EXAMPLE
+#   run-maven clean install
+#
+# ENVIRONMENT VARIABLES
+#   PROJECTS   A space-separated list of project paths or identifiers for which Maven
+#              goals will be executed.
+#
+# NOTES
+#   - The script requires the sourced `common-functions.sh` file to define the `exec_mvn`
+#     function, which handles the Maven execution logic.
+#   - The script uses the `root` variable (set in common-functions.sh) to define the local
+#     Maven repository directory.
+#   - The script uses the `opts` variable to define additional Maven options, such as the
+#     local repository directory.
+
+#prog=$(basename $0)
+dir=$(dirname "${0}")
+source "${dir}/common-functions.sh"
+
+opts="-Dmaven.repo.local=${root}/.m2/repository"
+
+goals="${*}"
+
+for project in ${PROJECTS}; do
+  counter=$((counter + 1))
+  exec_mvn "${project}" "${goals// /-}" "${counter}" "${opts}" "${goals}"
+done

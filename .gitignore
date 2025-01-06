@@ -1,0 +1,20 @@
+.idea/
+# Maven directories
+core/
+doxia/
+misc/
+plexus/
+plugins/
+shared/
+sisu/
+site/
+sources/
+studies/
+svn/
+# Our stuff
+.envrc
+.m2/repository/
+.sdkmanrc
+jqassistant/store/
+logs/
+target/
