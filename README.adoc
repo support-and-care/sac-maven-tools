@@ -20,7 +20,32 @@ Follow the instructions in https://maven.apache.org/scm.html[Maven SCM documenta
 
 == Common Tools
 
+You can execute some of the following tools from the root directory of this repository with the repo command, e.g.,
+
+[source,bash]
+----
+repo forall -c "${PWD}bin/gh-subscribe"
+----
+
+Note that it is necessary to provide the full path to the script
+to execute it in each repository as the `repo` command changes the working directory.
+
+[TIP]
+====
+Using the `-r` switch, you can execute the command on a subset of repositories only, e.g.,
+
+[source,bash]
+.Execute the command only on the core repositories
+----
+repo forall -r 'core' -c "${PWD}bin/gh-subscribe"
+----
+====
+
 The following tools are available in the `bin` directory (and have inherent documentation).
 
-* link:bin/gh-subscribe[gh-subscribe] - Subscribe to a GitHub repository (watch)
-* link:bin/run-maven[run-maven] - Execute Maven goals for multiple projects
+* link:bin/gh-subscribe[gh-subscribe] - Subscribe to a GitHub repository (watch).
++
+Execute with the `repo` command.
+* link:bin/run-maven[run-maven] - Execute Maven goals for multiple projects.
++
+Execute without the `repo` command (target projects are defined in the `PROJECTS` environment variable).
