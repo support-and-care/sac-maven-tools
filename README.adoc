@@ -48,4 +48,20 @@ The following tools are available in the `bin` directory (and have inherent docu
 Execute with the `repo` command.
 * link:bin/run-maven[run-maven] - Execute Maven goals for multiple projects.
 +
-Execute without the `repo` command (target projects are defined in the `PROJECTS` environment variable).
+Execute without the `repo` command (define target projects in the `PROJECTS` environment variable).
++
+As we intended this script for mass execution of many Maven projects and respective error tracking,
+it only shows minimal output (essentially success or failure, and a count of the Maven projects to proceed).
+The script writes more output to log files in the link:logs[`logs`] directory.
+Each execution will generate a new log file (in a respective subdirectory for each project).
++
+[CAUTION]
+====
+This script adds https://gradle.com/develocity/[Develocity]
+by configuring the respective link:develocity/extensions.xml[Maven extension] for all projects.
+
+If you want to make use of it, you have to set the environment variable `USE_DEVELOCITY` to `true`.
+This will automatically link:develocity/develocity.xml[accept upload permissions] *on your behalf*.
+Whenever you execute Maven projects,
+you will afterward find a report in Develocity (link will be published in the respective link:logs[`logs`] output).
+====

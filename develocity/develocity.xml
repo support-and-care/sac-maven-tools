@@ -20,7 +20,7 @@ under the License.
 <develocity>
     <buildScan>
         <publishing>
-            <onlyIf>true</onlyIf>
+            <onlyIf><![CDATA[env['USE_DEVELOCITY'] != null]]></onlyIf>
         </publishing>
         <termsOfUse>
             <url>https://gradle.com/help/legal-terms-of-use</url>

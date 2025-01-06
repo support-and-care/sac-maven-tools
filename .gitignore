@@ -16,5 +16,5 @@ svn/
 .m2/repository/
 .sdkmanrc
 jqassistant/store/
-logs/
+logs/*
 target/
