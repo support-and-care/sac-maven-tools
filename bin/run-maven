@@ -21,6 +21,7 @@ set -eu -o pipefail
 # ENVIRONMENT VARIABLES
 #   PROJECTS   A space-separated list of project paths or identifiers for which Maven
 #              goals will be executed.
+#          Default: All projects listed in .repo/project.list
 #
 # NOTES
 #   - The script requires the sourced `common-functions.sh` file to define the `exec_mvn`
