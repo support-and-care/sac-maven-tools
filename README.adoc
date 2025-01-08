@@ -32,7 +32,7 @@ https://sdkman.io/[SDKMAN!], a Software Development Kit Manager, helps to instal
 Some tests are using https://java.testcontainers.org/[Testcontainers].
 This library needs https://docs.docker.com/engine/[Docker Engine] to run properly.
 
-== Common Tools
+=== Background: `repo` command
 
 You can execute some of the following tools from the root directory of this repository with the repo command, e.g.,
 
@@ -57,17 +57,23 @@ repo forall -r 'core' -c "${PWD}/bin/gh-subscribe"
 
 The following tools are available in the `bin` directory (and have inherent documentation).
 
+== Common Tools
+
 * link:bin/gh-subscribe[gh-subscribe] - Subscribe to a GitHub repository (watch).
 +
 Execute with the `repo` command.
-* link:bin/run-maven[run-maven] - Execute Maven goals for multiple projects.
-+
-Execute without the `repo` command (define target projects in the `PROJECTS` environment variable).
-+
-As we intended this script for mass execution of many Maven projects and respective error tracking,
-it only shows minimal output (essentially success or failure, and a count of the Maven projects to proceed).
+
+== Maven Helper Tools and Analysis
+
+As we intended the following scripts for mass execution of many Maven projects and respective error tracking,
+they only show minimal output (essentially success or failure, and a count of the Maven projects to proceed).
 The script writes more output to log files in the link:logs[`logs`] directory.
 Each execution will generate a new log file (in a respective subdirectory for each project).
+
+Execute the scripts without the `repo` command (define target projects in the `PROJECTS` environment variable).
+
+* link:bin/run-maven[run-maven] - Execute Maven commands or goals for multiple projects.
+
 +
 [CAUTION]
 ====
@@ -79,3 +85,5 @@ This will automatically link:develocity/develocity.xml[accept upload permissions
 Whenever you execute Maven projects,
 you will afterward find a report in Develocity (link will be published in the respective link:logs[`logs`] output).
 ====
+
+* link:bin/run-jqa[run-jqa] - Execute jQAssistant goals for multiple projects.
