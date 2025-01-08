@@ -1,8 +1,5 @@
 jqassistant:
   scan:
     continue-on-error: true
-    include:
-      files:
-        - .
     properties:
       maven3.dependencies.scan: true
