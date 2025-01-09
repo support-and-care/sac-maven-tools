@@ -73,7 +73,7 @@ set -eu -o pipefail
 dir=$(dirname "${0}")
 source "${dir}/common-functions.sh"
 
-store_uri="file://${root}/jqassistant/store"
+store_uri="file://${root}/jqassistant/store${JQA_STORE_SUFFIX:-}"
 
 # Use getopts for classic shell-style option parsing
 while getopts "r" opt; do
