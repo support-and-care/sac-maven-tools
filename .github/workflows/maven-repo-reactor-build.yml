@@ -1,0 +1,47 @@
+name: Run Maven (reactor) build with all components
+
+on:
+  push:
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: 'Branch to initialize repo with (use default branch if empty)'
+        required: false
+        default: ''
+
+jobs:
+  initialize-repo:
+    runs-on: ubuntu-24.04
+
+    env:
+      BRANCH: "${{ github.event.inputs.branch || github.ref_name }}"
+      GITHUB_ORGANIZATION: "${{ github.repository_owner }}"
+
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v2
+
+      - name: Install repo tool
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y repo
+
+      - name: Initialize repo
+        run: |
+          ./bin/repo-start
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v3
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+
+      - name: Set up Maven 3.9.9
+        uses: s4u/maven-settings-action@v2
+        with:
+          maven-version: '3.9.9'
+
+      - name: Build with Maven
+        run: |
+          cd sources/aggregator
+          mvn clean install -fae

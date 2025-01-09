@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+set -eu -o pipefail
+
+: "${GITHUB_ORGANIZATION:=unknown}"
+: "${WORKING_BRANCH:=master}"
+: "${BRANCH:=master}"
+
+# Use latest repo if available
+PATH=".repo/repo:${PATH}"
+
+repo init \
+  "https://github.com/${GITHUB_ORGANIZATION}/maven-sources.git" \
+  -b "${BRANCH}"
+hash -r
+
+repo sync
+repo start "${WORKING_BRANCH}" --all
