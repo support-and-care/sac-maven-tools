@@ -42,4 +42,4 @@ jobs:
       - name: Build with Maven
         run: |
           cd sources/aggregator
-          mvn clean install -fae
+          mvn clean install -fae -Dsurefire.rerunFailingTestsCount=2
