@@ -3,3 +3,8 @@ jqassistant:
     continue-on-error: true
     properties:
       maven3.dependencies.scan: true
+  analyze:
+    rule:
+      directory: jqassistant/rules/
+    report:
+      fail-on-severity: blocker
