@@ -1,0 +1,26 @@
+<jqassistant-rules xmlns="http://schema.jqassistant.org/rule/v2.2"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://schema.jqassistant.org/rule/v2.2 https://jqassistant.github.io/jqassistant/current/schema/jqassistant-rule-v2.2.xsd">
+
+    <group id="default">
+        <includeConstraint refId="apache-maven-constraints:AvoidPlexusContainer"/>
+    </group>
+
+    <constraint id="apache-maven-constraints:AvoidPlexusContainer" severity="major">
+        <description>No component must directly use Plexus Container</description>
+        <cypher><![CDATA[
+MATCH (p:Maven:Project)
+        -[:CREATES]->
+      (a:Maven:Artifact)
+        -[:DEPENDS_ON]->
+      (d {group: 'org.codehaus.plexus', name: 'plexus-container-default'})
+RETURN DISTINCT
+  p.groupId AS srcGroup,
+  p.artifactId AS srcArtifact,
+  d.version AS tgtVersion,
+  d.group AS tgtGroup,
+  d.name AS tgtArtifact
+        ]]></cypher>
+    </constraint>
+
+</jqassistant-rules>
