@@ -81,15 +81,22 @@ exec_mvn() {
   else
     with="without"
   fi
+  logs="logs/${project}/${task}-$$-${counter}.log"
   echo -n "${project} (${counter}/${noof_projects}), a Maven project ${with} wrapper, build ${ext}"
   set +e
   (
     cd "${project}"
     # shellcheck disable=SC2086
     ${mvn} ${opts} ${goals} 2>&1
-  ) >"logs/${project}/${task}-$$.log"
-  if test $? -ne 0; then
-    echo "failed"
+  ) > "${logs}"
+  status="${?}"
+  if test ${status} -ne 0; then
+    echo "failed (logs: '${logs}')"
+    if eval "${FAIL_FAST:-false}"; then
+      echo "Failing fast and current execution failed with status '${status}'"
+      tail -20 "${logs}"
+      exit ${status}
+    fi
   else
     echo "succeeded"
   fi
