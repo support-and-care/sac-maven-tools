@@ -43,6 +43,8 @@ jobs:
         env:
           PROJECTS: "sources/aggregator"
           USE_DEVELOCITY: true
+          FAIL_FAST: true
+          PREVIEW_LOGLINES: 50
         run: ./bin/run-maven clean install site -fae -Dsurefire.rerunFailingTestsCount=2
 
       - name: Upload Logs
