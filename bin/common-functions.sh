@@ -12,9 +12,11 @@
 #   The script processes multiple projects at once and generates logs for each task performed.
 #
 # INPUT VARIABLES
+#   - dir: (Required, injected by caller) The directory path injected by the caller. This is used to determine the root directory.
 #   - ONLY_MAVEN: (Optional) If set to true (default), only Maven-based projects will be processed.
 #   - PROJECTS: (Optional) Space-separated list of projects to process, defaulting to the contents of `.repo/project.list`.
-#   - dir: (Required, injected by caller) The directory path injected by the caller. This is used to determine the root directory.
+#   - PREVIEW_LOGLINES: (Optional) Number of log lines to preview in case of a build failure.
+#   - FAIL_FAST: (Optional) If set to true, the script will exit immediately upon a build failure.
 #
 # OUTPUT VARIABLES
 #   - root: Absolute path to the parent directory of the given `dir`.
@@ -92,9 +94,9 @@ exec_mvn() {
   status="${?}"
   if test ${status} -ne 0; then
     echo "failed (logs: '${logs}')"
+    test "${PREVIEW_LOGLINES:-0}" -gt 0 && tail -"${PREVIEW_LOGLINES}" "${logs}"
     if eval "${FAIL_FAST:-false}"; then
       echo "Failing fast and current execution failed with status '${status}'"
-      tail -20 "${logs}"
       exit ${status}
     fi
   else
