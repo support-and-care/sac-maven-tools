@@ -58,12 +58,12 @@ jobs:
         uses: actions/upload-artifact@v4
         if: always() # Ensure this step runs even if the previous steps fail
         with:
-          name: maven-reactor-site
+          name: maven-reactor-site-Maven-${{ matrix.maven-version }}@JDK-${{ matrix.jdk }}-${{ matrix.distribution }}
           path: sources/aggregator/target/site
 
       - name: Upload Site
         uses: actions/upload-artifact@v4
         if: always() # Ensure this step runs even if the previous steps fail
         with:
-          name: build-logs
+          name: build-logs-Maven-${{ matrix.maven-version }}@JDK-${{ matrix.jdk }}-${{ matrix.distribution }}
           path: logs
