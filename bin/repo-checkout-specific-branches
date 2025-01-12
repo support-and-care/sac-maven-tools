@@ -4,9 +4,9 @@ set -eu -o pipefail
 
 # THIS IS REALLY A UGLY HACK - DO NOT USE IT IN PRODUCTION - ITS JUST A SHOWCASE
 declare -A branches
-branches["sisu/sisu-project"]="main"
-# specific branches
-branches["sources"]="${BRANCH}"
+#branches["sisu/sisu-project"]="main"
+# Specific branches
+branches["sources"]="${BRANCH}-with-site"
 branches["plugins/core/maven-verifier-plugin"]="${BRANCH}"
 branches["plugins/tools/maven-stage-plugin"]="${BRANCH}"
 branches["shared/artifact-transfer"]="${BRANCH}"
