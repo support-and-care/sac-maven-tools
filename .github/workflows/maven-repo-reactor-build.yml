@@ -13,6 +13,13 @@ jobs:
   maven-reactor-build:
     runs-on: ubuntu-24.04
 
+    strategy:
+      fail-fast: false
+      matrix:
+        distribution: [ 'zulu' ]
+        jdk: [ '21' ] # [ '11', '17', ]
+        maven-version: [ '3.9.9', '4.0.0-rc-2' ]
+
     env:
       BRANCH: "${{ github.event.inputs.branch || github.ref_name }}"
       GITHUB_ORGANIZATION: "${{ github.repository_owner }}"
@@ -21,9 +28,9 @@ jobs:
       - name: Setup Maven Action
         uses: s4u/setup-maven-action@v1.18.0
         with:
-          java-version: '21'
-          java-distribution: 'temurin'
-          maven-version: '3.9.9'
+          java-version: ${{ matrix.jdk }}
+          java-distribution: ${{ matrix.distribution }}
+          maven-version: ${{ matrix.maven-version }}
 
       - name: Show current Maven version
         run: mvn --version
