@@ -49,12 +49,14 @@ jobs:
 
       - name: Upload Logs
         uses: actions/upload-artifact@v4
+        if: always() # Ensure this step runs even if the previous steps fail
         with:
           name: maven-reactor-site
           path: sources/aggregator/target/site
 
       - name: Upload Site
         uses: actions/upload-artifact@v4
+        if: always() # Ensure this step runs even if the previous steps fail
         with:
           name: build-logs
           path: logs
