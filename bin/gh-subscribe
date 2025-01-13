@@ -33,6 +33,11 @@ set -eu -o pipefail
 #       and ignored topics are turned off.
 #```
 
+if [ -z "$GITHUB_TOKEN" ]; then
+    echo "GITHUB_TOKEN is not set"
+    exit 1
+fi
+
 owner_repos="$(git remote -v | sed -E 's#.*(github\.com[:/])([^/]+)/([^.]+).*#\2/\3#g' | sort -u)"
 
 for owner_repo in ${owner_repos}; do
