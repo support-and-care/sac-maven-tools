@@ -54,14 +54,14 @@ jobs:
           PREVIEW_LOGLINES: 50
         run: ./bin/run-maven clean install site -fae -Dsurefire.rerunFailingTestsCount=2
 
-      - name: Upload Logs
+      - name: Upload Site
         uses: actions/upload-artifact@v4
         if: always() # Ensure this step runs even if the previous steps fail
         with:
           name: maven-reactor-site-Maven-${{ matrix.maven-version }}@JDK-${{ matrix.jdk }}-${{ matrix.distribution }}
           path: sources/aggregator/target/site
 
-      - name: Upload Site
+      - name: Upload Logs
         uses: actions/upload-artifact@v4
         if: always() # Ensure this step runs even if the previous steps fail
         with:
