@@ -24,7 +24,7 @@ You can execute some of the following tools from the root directory of this repo
 
 [source,bash]
 ----
-repo forall -c "${PWD}bin/gh-subscribe"
+repo forall -c "${PWD}/bin/gh-subscribe"
 ----
 
 Note that it is necessary to provide the full path to the script
@@ -37,7 +37,7 @@ Using the `-r` switch, you can execute the command on a subset of repositories o
 [source,bash]
 .Execute the command only on the core repositories
 ----
-repo forall -r 'core' -c "${PWD}bin/gh-subscribe"
+repo forall -r 'core' -c "${PWD}/bin/gh-subscribe"
 ----
 ====
 
