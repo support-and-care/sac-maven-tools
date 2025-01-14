@@ -16,7 +16,21 @@ This repository contains a collection of tools and scripts to support the mainte
 
 === Check out Maven source code
 
+// further documentation: https://github.com/apache/maven-sources
+
 Follow the instructions in https://maven.apache.org/scm.html[Maven SCM documentation] to check out Maven to this directory.
+
+=== Further needed tools
+
+If you want to build Maven, you have to install a JDK 21 and Maven 3.9.9.
+
+[TIP]
+====
+https://sdkman.io/[SDKMAN!], a Software Development Kit Manager, helps to install and managing JDKs and Maven version on your machine.
+====
+
+Some tests are using https://java.testcontainers.org/[Testcontainers].
+This library needs https://docs.docker.com/engine/[Docker Engine] to run properly.
 
 == Common Tools
 
