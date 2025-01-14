@@ -12,6 +12,7 @@ sources/
 studies/
 svn/
 # Our stuff
+.repo/
 .envrc*
 .m2/repository/
 .sdkmanrc
