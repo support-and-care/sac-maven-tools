@@ -1,7 +1,15 @@
 jqassistant:
+  plugins:
+    - group-id: de.kontext-e.jqassistant.plugin
+      artifact-id: jqassistant.plugin.git
+      version: 2.2.2
   scan:
     continue-on-error: true
+    include:
+      files:
+        - .git
     properties:
+      directory.follow-symbolic-links: true
       maven3.dependencies.scan: true
   analyze:
     rule:
