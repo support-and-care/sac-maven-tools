@@ -32,6 +32,14 @@ https://sdkman.io/[SDKMAN!], a Software Development Kit Manager, helps to instal
 Some tests are using https://java.testcontainers.org/[Testcontainers].
 This library needs https://docs.docker.com/engine/[Docker Engine] to run properly.
 
+https://github.com/diffplug/spotless[Spotless] Plugin needs https://www.npmjs.com/[NPM] during the build.
+Therefore, also NPM is needed.
+
+[TIP]
+====
+https://github.com/nvm-sh/nvm[NVM], a Node Version Manager, helps to install and managing Node and NPM versions on your machine.
+====
+
 == Common Tools
 
 You can execute some of the following tools from the root directory of this repository with the repo command, e.g.,
