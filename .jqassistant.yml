@@ -2,7 +2,7 @@ jqassistant:
   plugins:
     - group-id: de.kontext-e.jqassistant.plugin
       artifact-id: jqassistant.plugin.git
-      version: 2.2.2
+      version: 2.3.0
   scan:
     continue-on-error: true
     include:
