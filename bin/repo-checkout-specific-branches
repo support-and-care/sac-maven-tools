@@ -4,18 +4,10 @@ set -eu -o pipefail
 
 # THIS IS REALLY A UGLY HACK - DO NOT USE IT IN PRODUCTION - ITS JUST A SHOWCASE
 declare -A branches
-#branches["sisu/sisu-project"]="main"
 # Specific branches
 branches["sources"]="${BRANCH}-with-site"
-branches["plugins/core/maven-verifier-plugin"]="${BRANCH}"
-branches["plugins/tools/maven-stage-plugin"]="${BRANCH}"
-branches["shared/artifact-transfer"]="${BRANCH}"
-branches["shared/mapping"]="${BRANCH}"
-branches["shared/project-utils"]="${BRANCH}"
-branches["shared/shared-io"]="${BRANCH}"
-branches["studies/consumer-pom"]="${BRANCH}-consumer-pom"
-branches["studies/maven-eventsound-extension"]="${BRANCH}-maven-eventsound-extension"
-branches["studies/maven-extension-demo"]="${BRANCH}-maven-extension-demo"
+#branches["plugins/core/maven-verifier-plugin"]="${BRANCH}"
+#branches["plugins/tools/maven-stage-plugin"]="${BRANCH}"
 
 # Use latest repo if available
 PATH=".repo/repo:${PATH}"
