@@ -11,7 +11,8 @@ PATH=".repo/repo:${PATH}"
 
 repo init \
   "https://github.com/${GITHUB_ORGANIZATION}/maven-sources.git" \
-  -b "support-and-care/${BRANCH}"
+  -m "minimal-manifest.xml" \
+  -b "${BRANCH}"
 hash -r
 
 repo sync
