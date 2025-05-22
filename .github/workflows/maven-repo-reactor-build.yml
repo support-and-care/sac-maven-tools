@@ -1,6 +1,8 @@
 name: Run Maven (reactor) build with all components
 
 on:
+  schedule:
+    - cron: '0 3 * * *'
   push:
   workflow_dispatch:
     inputs:
