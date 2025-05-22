@@ -22,5 +22,5 @@ for branch in "${!branches[@]}"; do
       origin="plexus"
       ;;
   esac
-  repo forall -v "${branch}" -c "git fetch --all --prune && git checkout -b ${branches[${branch}]} ${origin}/${branches[${branch}]} || true"
+  repo forall -v "${branch}" -pc "git fetch --all --prune && ${GIT_CMD:-"git checkout -b ${branches[${branch}]} ${origin}/${branches[${branch}]}" } || true"
 done
