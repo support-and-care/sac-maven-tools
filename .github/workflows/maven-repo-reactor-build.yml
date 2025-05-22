@@ -27,7 +27,7 @@ jobs:
       GITHUB_ORGANIZATION: "${{ github.repository_owner }}"
 
     steps:
-      - name: Setup Maven Action
+      - name: Setup Maven
         uses: s4u/setup-maven-action@v1.18.0
         with:
           java-version: ${{ matrix.jdk }}
@@ -36,6 +36,14 @@ jobs:
 
       - name: Show current Maven version
         run: mvn --version
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Verify npm installation
+        run: npm --version
 
       - name: Install repo tool
         run: |
