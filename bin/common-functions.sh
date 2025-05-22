@@ -39,6 +39,7 @@
 
 : "${ONLY_MAVEN:=true}"
 : "${PROJECTS:=$(cat .repo/project.list)}"
+: "${SETTINGS:=${PWD}/settings.xml}"
 
 # shellcheck disable=SC2034 disable=SC2154
 # root is used in other scripts, dir is injeted by the caller
@@ -89,7 +90,7 @@ exec_mvn() {
   (
     cd "${project}"
     # shellcheck disable=SC2086
-    ${mvn} ${opts} ${goals} 2>&1
+    ${mvn} -s "${SETTINGS}" ${opts} ${goals} 2>&1
   ) > "${logs}"
   status="${?}"
   if test ${status} -ne 0; then
