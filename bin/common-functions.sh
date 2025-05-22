@@ -69,7 +69,7 @@ exec_mvn() {
   ext=""
   case "${project}" in
   "core/maven")
-    ext="(no extension) "
+    ext=" (no extension)"
     ;;
   *)
     mkdir -p "${project}/.mvn"
@@ -85,7 +85,7 @@ exec_mvn() {
     with="without"
   fi
   logs="logs/${project}/${task}-$$-${counter}.log"
-  echo -n "${project} (${counter}/${noof_projects}), a Maven project ${with} wrapper, build ${ext}"
+  echo -n "${project} (${counter}/${noof_projects}), a Maven project ${with} wrapper, build (logs: '${logs}') "
   set +e
   (
     cd "${project}"
@@ -94,14 +94,14 @@ exec_mvn() {
   ) > "${logs}"
   status="${?}"
   if test ${status} -ne 0; then
-    echo "failed (logs: '${logs}')"
+    echo "failed${ext}"
     test "${PREVIEW_LOGLINES:-0}" -gt 0 && tail -"${PREVIEW_LOGLINES}" "${logs}"
     if eval "${FAIL_FAST:-false}"; then
       echo "Failing fast and current execution failed with status '${status}'"
       exit ${status}
     fi
   else
-    echo "succeeded"
+    echo "succeeded${ext}"
   fi
   set -e
 }
