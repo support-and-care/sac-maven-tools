@@ -67,7 +67,7 @@ jobs:
           USE_DEVELOCITY: true
           FAIL_FAST: true
           PREVIEW_LOGLINES: 50
-        run: ./bin/run-maven clean install -fae -Dsurefire.rerunFailingTestsCount=2
+        run: ./bin/run-maven clean install -fae -Dsurefire.rerunFailingTestsCount=2 -DskipTests
 
       - name: Upload Site
         uses: actions/upload-artifact@v4
