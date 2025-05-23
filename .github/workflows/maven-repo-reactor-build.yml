@@ -1,4 +1,4 @@
-name: Run Maven (reactor) build with all components
+name: Run Maven build of all components
 
 on:
   schedule:
@@ -64,7 +64,6 @@ jobs:
       - name: Build with Maven
         env:
           USE_DEVELOCITY: true
-          FAIL_FAST: true
           PREVIEW_LOGLINES: 50
         run: ./bin/run-maven clean install -fae -Dsurefire.rerunFailingTestsCount=2
 
