@@ -63,11 +63,10 @@ jobs:
 
       - name: Build with Maven
         env:
-          PROJECTS: "sources/aggregator"
           USE_DEVELOCITY: true
           FAIL_FAST: true
           PREVIEW_LOGLINES: 50
-        run: ./bin/run-maven clean install -fae -Dsurefire.rerunFailingTestsCount=2 -DskipTests
+        run: ./bin/run-maven clean install -fae -Dsurefire.rerunFailingTestsCount=2
 
       - name: Upload Site
         uses: actions/upload-artifact@v4
