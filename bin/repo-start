@@ -4,15 +4,15 @@ set -eu -o pipefail
 
 : "${GITHUB_ORGANIZATION:=unknown}"
 : "${WORKING_BRANCH:=master}"
-: "${BRANCH:=master}"
+: "${BRANCH:=$(git branch --show-current)}"
 
 # Use latest repo if available
 PATH=".repo/repo:${PATH}"
 
 repo init \
-  -b "${BRANCH}" \
-  "https://github.com/${GITHUB_ORGANIZATION}/maven-sources.git"
-
+  "https://github.com/${GITHUB_ORGANIZATION}/maven-sources.git" \
+  --no-current-branch \
+  -b "${BRANCH}"
 hash -r
 
 repo sync
