@@ -75,13 +75,33 @@ set -eu -o pipefail
 dir=$(dirname "${0}")
 source "${dir}/common-functions.sh"
 
-store_uri="file://${root}/jqassistant/store${JQA_STORE_SUFFIX:-}"
+wait_for_neo4j_lock() {
+  local store_uri=$1
+  local lock_file="${store_uri}/data/databases/store_lock"
+  local retry_count=0
+  while [ -f "${lock_file}" ]; do
+    echo "Neo4j is still locked, waiting for it to become free" >&2
+    ls -l "${lock_file}"
+    sleep 5
+    retry_count=$((retry_count + 1))
+    if [ $retry_count -ge 3 ]; then
+      echo "Force removing lock file after 3 retries" >&2
+      rm -f "${lock_file}"
+      break
+    fi
+  done
+}
+
+store_directory="${root}/jqassistant/store${JQA_STORE_SUFFIX:-}"
+store_uri="file://${store_directory}"
+use_remote_store=false
 
 # Use getopts for classic shell-style option parsing
 while getopts "r" opt; do
   case ${opt} in
   r)
     store_uri="bolt://localhost:7687"
+    use_remote_store=true
     ;;
   \?)
     echo "Invalid option: -$OPTARG" >&2
@@ -119,6 +139,9 @@ for opt in "${@:=scan}"; do
   scan)
     for project in ${PROJECTS}; do
       counter=$((counter + 1))
+      if [ "${use_remote_store}" = "false" ]; then
+        wait_for_neo4j_lock "${store_directory}"
+      fi
       exec_mvn "${project}" "${opt}" "${counter}" "${jqa_scan_opts}" "${jqa}:${opt}"
     done
     ;;
