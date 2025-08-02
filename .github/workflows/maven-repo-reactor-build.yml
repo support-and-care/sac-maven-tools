@@ -67,9 +67,22 @@ jobs:
           PREVIEW_LOGLINES: 50
         run: ./bin/run-maven clean install -fae -Dsurefire.rerunFailingTestsCount=2
 
+      - name: Run jQAssistant Scan
+        env:
+          USE_DEVELOCITY: true
+          PREVIEW_LOGLINES: 50
+        run: ./bin/run-jqa scan
+
       - name: Upload Logs
         uses: actions/upload-artifact@v4
         if: always() # Ensure this step runs even if the previous steps fail
         with:
           name: build-logs-Maven-${{ matrix.maven-version }}@JDK-${{ matrix.jdk }}-${{ matrix.distribution }}
           path: logs
+
+      - name: Upload jqassistant/store artifact
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: jqassistant-store
+          path: jqassistant/store
