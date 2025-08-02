@@ -25,7 +25,7 @@ jobs:
       matrix:
         distribution: [ 'zulu' ]
         jdk: [ '21' ] # [ '11', '17', ]
-        maven-version: [ '3.9.9' ] # , '4.0.0-rc-3' ]
+        maven-version: [ '3.9.11' ] # , '4.0.0-rc-4' ]
 
     env:
       BRANCH: "${{ github.event.inputs.branch || github.ref_name }}"
@@ -66,13 +66,6 @@ jobs:
           USE_DEVELOCITY: true
           PREVIEW_LOGLINES: 50
         run: ./bin/run-maven clean install -fae -Dsurefire.rerunFailingTestsCount=2
-
-      - name: Upload Site
-        uses: actions/upload-artifact@v4
-        if: always() # Ensure this step runs even if the previous steps fail
-        with:
-          name: maven-reactor-site-Maven-${{ matrix.maven-version }}@JDK-${{ matrix.jdk }}-${{ matrix.distribution }}
-          path: sources/aggregator/target/site
 
       - name: Upload Logs
         uses: actions/upload-artifact@v4
