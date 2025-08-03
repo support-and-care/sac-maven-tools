@@ -39,6 +39,10 @@ set -eu -o pipefail
 #                                       Displays the effective jQAssistant configuration.
 #               - effective-rules       Displays all effective jQAssistant rules.
 #
+#               - github                Scan GitHub repositories (this is not a genuine jQA goal).
+#                                       NOTE: This uses .git scanning results and should be run after an ordinary "scan".
+#                                       Otherwise results may be incomplete.
+#
 # USAGE EXAMPLE
 #   To scan (all) projects using a local jQAssistant store:
 #       run-jqa scan
@@ -48,6 +52,9 @@ set -eu -o pipefail
 #
 #   To scan projects with a Neo4j Bolt store (start with `run-jqa server`):
 #       run-jqa -r scan
+#
+#   To scan Maven GitHub repositories
+#       run-jqa github
 #
 #   To analyze a project after scanning:
 #       run-jqa analyze
@@ -73,6 +80,7 @@ set -eu -o pipefail
 
 #prog=$(basename $0)
 dir=$(dirname "${0}")
+# shellcheck source=common-functions.sh
 source "${dir}/common-functions.sh"
 
 wait_for_neo4j_lock() {
@@ -104,11 +112,11 @@ while getopts "r" opt; do
     use_remote_store=true
     ;;
   \?)
-    echo "Invalid option: -$OPTARG" >&2
+    echo "Invalid option: -${OPTARG}" >&2
     exit 1
     ;;
   :)
-    echo "Option -$OPTARG requires an argument." >&2
+    echo "Option -${OPTARG} requires an argument." >&2
     exit 1
     ;;
   esac
@@ -117,12 +125,17 @@ done
 # Shift to handle additional positional arguments after options
 shift $((OPTIND - 1))
 
-jqa_common_opts="
-  ${MVN_OPTS:-}
-  -Dmaven.repo.local=${root}/.m2/repository
-  -Djqassistant.store.uri=${store_uri}
-  -Djqassistant.configuration.locations=${root}/.jqassistant.yml
-"
+jqa_common_opts() {
+  local extension="${1:-}"
+  echo "
+    ${MVN_OPTS:-}
+    -Dmaven.repo.local=${root}/.m2/repository
+    -Djqassistant.store.uri=${store_uri}
+    -Djqassistant.configuration.locations=${root}/.jqassistant${extension}.yml
+  "
+}
+
+jqa_common_opts=$(jqa_common_opts "")
 jqa_scan_opts="
   ${jqa_common_opts}
   -Djqassistant.scan.reset=false
@@ -135,6 +148,11 @@ for opt in "${@:=scan}"; do
   reset | server | analyze | list-plugins | list-rules | list-constraints | list-queries | report | effective-configuration | effective-rules)
     # shellcheck disable=SC2086
     mvn -s "${SETTINGS}" ${jqa_common_opts} "${jqa}:${opt}" "org.asciidoctor:asciidoctor-maven-plugin:process-asciidoc"
+    ;;
+  github)
+    jqa_common_github_opts=$(jqa_common_opts "-github")
+    # shellcheck disable=SC2086
+    mvn -s "${SETTINGS}" ${jqa_common_github_opts} -Djqassistant.scan.reset=false "${jqa}:scan"
     ;;
   scan)
     for project in ${PROJECTS}; do
