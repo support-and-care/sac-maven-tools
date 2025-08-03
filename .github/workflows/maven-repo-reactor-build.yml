@@ -12,6 +12,9 @@ on:
         required: false
         default: ''
 
+permissions:
+  packages: read
+
 jobs:
   maven-reactor-build:
     # Run the job if:
@@ -30,6 +33,9 @@ jobs:
     env:
       BRANCH: "${{ github.event.inputs.branch || github.ref_name }}"
       GITHUB_ORGANIZATION: "${{ github.repository_owner }}"
+      GITHUB_LOGIN: ${{ github.repository_owner }}
+      GITHUB_TOKEN: ${{ github.token }}
+      GITHUB_OAUTH: ${{ github.token }}
 
     steps:
       - name: Setup Maven

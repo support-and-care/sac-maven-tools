@@ -134,7 +134,7 @@ for opt in "${@:=scan}"; do
   case "${opt}" in
   reset | server | analyze | list-plugins | list-rules | list-constraints | list-queries | report | effective-configuration | effective-rules)
     # shellcheck disable=SC2086
-    mvn ${jqa_common_opts} "${jqa}:${opt}"
+    mvn -s "${SETTINGS}" ${jqa_common_opts} "${jqa}:${opt}" "org.asciidoctor:asciidoctor-maven-plugin:process-asciidoc"
     ;;
   scan)
     for project in ${PROJECTS}; do

@@ -48,5 +48,19 @@
             </repositories>
         </profile>
     </profiles>
+
+    <servers>
+        <server>
+            <id>github-ascheman-jqa-git</id>
+            <username>${GITHUB_LOGIN}</username>
+            <password>${GITHUB_TOKEN}</password>
+        </server>
+        <server>
+            <id>github-ascheman-jqa-github</id>
+            <username>${GITHUB_LOGIN}</username>
+            <password>${GITHUB_TOKEN}</password>
+        </server>
+    </servers>
+
 </settings>
 
