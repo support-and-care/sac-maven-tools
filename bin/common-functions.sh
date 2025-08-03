@@ -90,7 +90,7 @@ exec_mvn() {
   (
     cd "${project}"
     # shellcheck disable=SC2086
-    ${mvn} -s "${SETTINGS}" ${opts} ${goals} 2>&1
+    ${mvn} -B -s "${SETTINGS}" ${opts} ${goals} 2>&1
   ) > "${logs}"
   status="${?}"
   if test ${status} -ne 0; then
