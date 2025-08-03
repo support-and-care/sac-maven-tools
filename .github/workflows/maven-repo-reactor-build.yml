@@ -100,3 +100,13 @@ jobs:
         with:
           name: jqassistant-store
           path: jqassistant/store
+
+      - name: Collect state upon failure
+        if: failure()
+        run: |
+          echo "Git:"
+          git status
+          echo "Env:"
+          env | sort
+          echo "PWD:"
+          pwd
