@@ -38,13 +38,12 @@
 #
 
 : "${ONLY_MAVEN:=true}"
-: "${PROJECTS:=$(cat .repo/project.list)}"
 : "${SETTINGS:=${PWD}/settings.xml}"
 
 # shellcheck disable=SC2034 disable=SC2154
 # root is used in other scripts, dir is injeted by the caller
 root=$(readlink -f "${dir}/..")
-: "${PROJECTS=$(cat .repo/project.list)}"
+[[ -z "${PROJECTS:-}" ]] && PROJECTS="$(cat ${root}/.repo/project.list)"
 noof_projects=$(echo "${PROJECTS}" | wc -w | sed -e 's/ //g')
 counter=0
 

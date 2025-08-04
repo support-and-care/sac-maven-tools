@@ -11,6 +11,10 @@ on:
         description: 'Branch to initialize repo with (use default branch if empty)'
         required: false
         default: ''
+      projects:
+        description: 'Space-separated list of projects to process'
+        required: false
+        default: ''
 
 permissions:
   packages: read
@@ -38,6 +42,7 @@ jobs:
       GITHUB_LOGIN: ${{ github.repository_owner }}
       GITHUB_TOKEN: ${{ github.token }}
       GITHUB_OAUTH: ${{ github.token }}
+      PROJECTS: ${{ github.event.inputs.projects }}
 
     steps:
       - name: Setup Maven
