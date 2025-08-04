@@ -29,19 +29,4 @@
             </plugin>
         </plugins>
     </build>
-
-    <repositories>
-        <repository>
-            <id>github-ascheman-jqa-git</id>
-            <name>GitHub Packages jQA Git Plugin / Aschemann</name>
-            <url>https://maven.pkg.github.com/ascheman/jqassistant-git-plugin</url>
-            <snapshots><enabled>true</enabled></snapshots>
-        </repository>
-        <repository>
-            <id>github-ascheman-jqa-github</id>
-            <name>GitHub Packages jQA GitHub Plugin / Aschemann</name>
-            <url>https://maven.pkg.github.com/ascheman/jqassistant-github-plugin</url>
-            <snapshots><enabled>true</enabled></snapshots>
-        </repository>
-    </repositories>
 </project>
