@@ -73,26 +73,19 @@ jobs:
         env:
           USE_DEVELOCITY: true
           PREVIEW_LOGLINES: 50
-        run: ./bin/run-maven clean install -fae -Dsurefire.rerunFailingTestsCount=2
+        run: ./bin/run-maven clean install -fae -Dsurefire.rerunFailingTestsCount=2 2>&1 | tee logs/maven-log
 
       - name: Run jQAssistant Scan
         env:
           USE_DEVELOCITY: true
           PREVIEW_LOGLINES: 50
-        run: ./bin/run-jqa scan
+        run: ./bin/run-jqa scan 2>&1 | tee logs/jqa-scan.log
 
       - name: Run jQAssistant GitHub Scan
         env:
           USE_DEVELOCITY: true
           PREVIEW_LOGLINES: 50
-        run: ./bin/run-jqa github
-
-      - name: Upload Logs
-        uses: actions/upload-artifact@v4
-        if: always() # Ensure this step runs even if the previous steps fail
-        with:
-          name: build-logs-Maven-${{ matrix.maven-version }}@JDK-${{ matrix.jdk }}-${{ matrix.distribution }}
-          path: logs
+        run: ./bin/run-jqa github 2>&1 | tee logs/jqa-github.log
 
       - name: Upload jqassistant/store artifact
         uses: actions/upload-artifact@v4
@@ -101,12 +94,22 @@ jobs:
           name: jqassistant-store
           path: jqassistant/store
 
-      - name: Collect state upon failure
-        if: failure()
+      - name: Collect Git status and environment
+        if: always()
         run: |
-          echo "Git:"
-          git status
-          echo "Env:"
-          env | sort
-          echo "PWD:"
-          pwd
+          (
+            echo "Git:"
+            git status
+            echo "Env:"
+            env | sort
+            echo "PWD:"
+            pwd
+          ) 2>&1 | tee logs/env.log 
+
+      - name: Upload Logs
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: build-logs-Maven-${{ matrix.maven-version }}@JDK-${{ matrix.jdk }}-${{ matrix.distribution }}
+          path: logs
+
