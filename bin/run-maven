@@ -2,6 +2,10 @@
 
 set -eu -o pipefail
 
+if [[ "${ACTIONS_RUNNER_DEBUG:-}" == "true" ]]; then
+  set -vx
+fi
+
 # This script executes Maven goals for multiple projects with specific options and configurations.
 #
 # SYNOPSIS

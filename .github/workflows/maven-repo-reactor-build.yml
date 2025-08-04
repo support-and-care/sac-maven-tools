@@ -15,6 +15,12 @@ on:
         description: 'Space-separated list of projects to process'
         required: false
         default: ''
+      debug:
+        description: 'Enable debug mode (finally the same as debug checkbox but settable via "gh" CLI/API'
+        required: false
+        type: boolean
+        default: false
+
 
 permissions:
   packages: read
@@ -43,6 +49,8 @@ jobs:
       GITHUB_TOKEN: ${{ github.token }}
       GITHUB_OAUTH: ${{ github.token }}
       PROJECTS: ${{ github.event.inputs.projects }}
+      ACTIONS_RUNNER_DEBUG: ${{ github.event.inputs.debug }}
+      ACTIONS_STEP_DEBUG: ${{ github.event.inputs.debug }}
 
     steps:
       - name: Setup Maven
