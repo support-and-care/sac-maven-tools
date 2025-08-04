@@ -26,6 +26,7 @@ permissions:
   packages: read
   issues: read
   pull-requests: read
+  contents: read
   
 jobs:
   maven-reactor-build:
