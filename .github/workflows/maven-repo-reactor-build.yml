@@ -150,6 +150,17 @@ jobs:
       - name: Verify npm installation
         run: npm --version
 
+      - name: Install repo tool
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y repo
+
+      - name: Initialize repo
+        run: ./bin/repo-start
+
+      - name: Switch to special branches
+        run: ./bin/repo-checkout-specific-branches
+
       - name: Download jqassistant/store artifact
         uses: actions/download-artifact@v4
         with:
