@@ -21,7 +21,6 @@ on:
         type: boolean
         default: false
 
-
 permissions:
   packages: read
   issues: read
@@ -29,19 +28,12 @@ permissions:
   contents: read
   
 jobs:
-  maven-reactor-build:
+  maven-all-projects-build:
     # Run the job if:
     # - It's triggered via schedule, only if on the main branch
     # - Or if it's triggered by a push (any branch) or workflow_dispatch (any branch)
     if: ${{ github.event_name != 'schedule' || github.ref == 'refs/heads/main' }}
     runs-on: self-hosted
-
-    strategy:
-      fail-fast: false
-      matrix:
-        distribution: [ 'zulu' ]
-        jdk: [ '21' ] # [ '11', '17', ]
-        maven-version: [ '3.9.11' ] # , '4.0.0-rc-4' ]
 
     env:
       BRANCH: "${{ github.event.inputs.branch || github.ref_name }}"
@@ -57,9 +49,9 @@ jobs:
       - name: Setup Maven
         uses: s4u/setup-maven-action@v1.18.0
         with:
-          java-version: ${{ matrix.jdk }}
-          java-distribution: ${{ matrix.distribution }}
-          maven-version: ${{ matrix.maven-version }}
+          java-version: "21"
+          java-distribution: "zulu"
+          maven-version: "3.9.11"
 
       - name: Show current Maven version
         run: mvn --version
