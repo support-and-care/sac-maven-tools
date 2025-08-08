@@ -1,0 +1,4 @@
+= Apache Maven Project (Full jQA Reports)
+
+* xref:full-jqa-report.adoc[Full jQA Reports]
+* xref:github-reports.adoc[GitHub Reports]

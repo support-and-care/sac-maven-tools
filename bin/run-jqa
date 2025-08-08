@@ -152,7 +152,7 @@ for opt in "${@:=scan}"; do
   case "${opt}" in
   reset | server | analyze | list-plugins | list-rules | list-constraints | list-queries | report | effective-configuration | effective-rules)
     # shellcheck disable=SC2086
-    mvn -B -s "${SETTINGS}" ${jqa_common_opts} "${jqa}:${opt}" "org.asciidoctor:asciidoctor-maven-plugin:process-asciidoc"
+    mvn -B -s "${SETTINGS}" ${jqa_common_opts} -Djqassistant.analyze.execute-applied-concepts "${jqa}:${opt}" "org.asciidoctor:asciidoctor-maven-plugin:process-asciidoc"
     ;;
   github)
     jqa_common_github_opts=$(jqa_common_opts "-github")

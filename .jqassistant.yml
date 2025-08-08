@@ -1,5 +1,8 @@
 jqassistant:
   plugins:
+    - group-id: net.aschemann.jqassistant.plugins
+      artifact-id: jqa-groovy-plugin
+      version: 0.2.0-SNAPSHOT
     - group-id: de.kontext-e.jqassistant.plugin
       artifact-id: jqassistant.plugin.git
       version: 2.5.0-SNAPSHOT

@@ -1,0 +1,4 @@
+= jQA GitHub Reports
+
+include::../../target/jqassistant/report/groovy-reports/open-dependabot-PRs.adoc[leveloffset=+1]
+

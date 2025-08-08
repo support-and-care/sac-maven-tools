@@ -1,0 +1,6 @@
+= Full jQA Reports
+
+include::jQAssistant:Summary[]
+
+include::jQAssistant:Rules[leveloffset=+1]
+

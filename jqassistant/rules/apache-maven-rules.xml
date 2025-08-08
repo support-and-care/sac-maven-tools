@@ -3,8 +3,27 @@
                    xsi:schemaLocation="http://schema.jqassistant.org/rule/v2.2 https://jqassistant.github.io/jqassistant/current/schema/jqassistant-rule-v2.2.xsd">
 
     <group id="default">
+        <includeConcept refId="apache-maven-concept:ListOpenDependabotPRs"/>
         <includeConstraint refId="apache-maven-constraints:AvoidPlexusContainer"/>
     </group>
+
+    <concept id="apache-maven-concept:ListOpenDependabotPRs" severity="major">
+        <description>List Open DependaBot PullRequests per Repository</description>
+        <cypher><![CDATA[
+MATCH (r:GitHub:Repository)
+        -[:HAS_PULL_REQUEST]->(n:GitHub:PullRequest {state:"OPEN"})
+        -[:CREATED_BY]->(u:GitHub:User {username:"dependabot[bot]"})
+RETURN r.name as Repository,
+       r.uri as URL,
+       n.title as Title,
+       n.number as Id
+// ORDER BY NoofOpenDependabotPRs DESC
+ORDER BY Repository, Id DESC
+        ]]></cypher>
+        <report type="Groovy">
+            <property name="scriptname">jqassistant/groovy/listDependabotPRs.groovy</property>
+        </report>
+    </concept>
 
     <constraint id="apache-maven-constraints:AvoidPlexusContainer" severity="major">
         <description>No component must directly use Plexus Container</description>
