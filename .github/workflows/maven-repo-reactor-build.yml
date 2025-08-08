@@ -199,3 +199,89 @@ jobs:
           name: build-logs-jqa-github-scan
           path: logs
 
+  maven-jqa-analyze:
+    # Run the job if:
+    # - It's triggered via schedule, only if on the main branch
+    # - Or if it's triggered by a push (any branch) or workflow_dispatch (any branch)
+    if: ${{ github.event_name != 'schedule' || github.ref == 'refs/heads/main' }}
+    runs-on: self-hosted
+    needs: maven-jqa-github-scan
+
+    env:
+      BRANCH: "${{ github.event.inputs.branch || github.ref_name }}"
+      GITHUB_ORGANIZATION: "${{ github.repository_owner }}"
+      GITHUB_LOGIN: ${{ github.repository_owner }}
+      GITHUB_TOKEN: ${{ github.token }}
+      GITHUB_OAUTH: ${{ github.token }}
+      PROJECTS: ${{ github.event.inputs.projects }}
+      ACTIONS_RUNNER_DEBUG: ${{ github.event.inputs.debug }}
+      ACTIONS_STEP_DEBUG: ${{ github.event.inputs.debug }}
+
+    steps:
+      - name: Setup Maven
+        uses: s4u/setup-maven-action@v1.18.0
+        with:
+          java-version: "21"
+          java-distribution: "zulu"
+          maven-version: "3.9.11"
+
+      - name: Show current Maven version
+        run: mvn --version
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Verify npm installation
+        run: npm --version
+
+      - name: Install repo tool
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y repo
+
+      - name: Initialize repo
+        run: ./bin/repo-start
+
+      - name: Switch to special branches
+        run: ./bin/repo-checkout-specific-branches
+
+      - name: Download jqassistant/store artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: jqassistant-store-full
+          path: jqassistant/store
+
+      - name: Run jQAssistant Analyze
+        env:
+          USE_DEVELOCITY: true
+          PREVIEW_LOGLINES: 50
+        run: ./bin/run-jqa analyze 2>&1 | tee logs/jqa-analyze.log
+
+      - name: Upload generated documentation
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: generated-docs
+          path: target/generated-docs
+
+      - name: Collect Git status and environment
+        if: always()
+        run: |
+          (
+            echo "Git:"
+            git status
+            echo "Env:"
+            env | sort
+            echo "PWD:"
+            pwd
+          ) 2>&1 | tee logs/env.log 
+
+      - name: Upload Logs
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: build-logs-jqa-analyze
+          path: logs
+
