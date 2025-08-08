@@ -41,7 +41,7 @@ jobs:
       GITHUB_LOGIN: ${{ github.repository_owner }}
       GITHUB_TOKEN: ${{ github.token }}
       GITHUB_OAUTH: ${{ github.token }}
-      PROJECTS: ${{ github.event.inputs.projects }}
+      PROJECTS: 'shared/reporting-api shared/mapping shared/shared-incremental shared/shared-resources'
       ACTIONS_RUNNER_DEBUG: ${{ github.event.inputs.debug }}
       ACTIONS_STEP_DEBUG: ${{ github.event.inputs.debug }}
 
