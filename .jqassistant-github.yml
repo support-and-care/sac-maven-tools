@@ -9,8 +9,6 @@ jqassistant:
   scan:
     continue-on-error: true
     include:
-#      files:
-#        - .git
       urls:
         - github:repository::https://github.com/apache/maven-site
         - github:repository::https://github.com/apache/maven-sources

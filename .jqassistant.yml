@@ -5,9 +5,6 @@ jqassistant:
       version: 2.5.0-SNAPSHOT
   scan:
     continue-on-error: true
-    include:
-      files:
-        - .git
     properties:
       directory.follow-symbolic-links: true
       maven3.dependencies.scan: true
