@@ -292,6 +292,11 @@ jobs:
     needs: maven-jqa-analyze
 
     steps:
+      - name: Install jq
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y jq
+
       - uses: actions/checkout@v3
 
       # Netlify needs NPM/Node
@@ -303,6 +308,9 @@ jobs:
       - name: Verify npm installation
         run: npm --version
 
+      - name: Install Netlify CLI globally
+        run: npm install -g netlify-cli
+
       - name: Download generated documentation
         uses: actions/download-artifact@v4
         with:
@@ -313,18 +321,36 @@ jobs:
       - uses: nelonoel/branch-name@v1.0.1
 
       - name: Deploy to Netlify
-        uses: nwtgck/actions-netlify@v3.0
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
           NETLIFY_DEPLOY_TO_PROD: false
           NETLIFY_DEPLOY_MESSAGE: "Preview deploy from GitHub Actions"
           BRANCH: ${{ env.BRANCH_NAME }}
+        run: |
+          # Deploy the directory 'dist' (change to your folder) as draft deploy with alias as branch name
+          output=$(netlify deploy --no-build --dir=target/generated-docs --site=$NETLIFY_SITE_ID --auth=$NETLIFY_AUTH_TOKEN --json --alias="${GITHUB_REF_NAME//refs\/heads\//}" --message "Preview deploy from $GITHUB_REF_NAME")
+          
+          echo "Raw deploy output:"
+          echo "$output"
+          
+          # Parse the 'deploy_url' from the JSON output using jq
+          deploy_url=$(echo "$output" | jq -r '.deploy_url')
+          echo "Deploy URL: $deploy_url"
+
+          # Export deploy URL for other steps and workflow outputs
+          echo "NETLIFY_PREVIEW_URL=$deploy_url" >> $GITHUB_ENV
+          echo "::set-output name=preview_url::$deploy_url"
+
+      - name: Show deploy URL in workflow summary
+        run: |
+          echo "Netlify Preview URL: ${{ env.NETLIFY_PREVIEW_URL }}"
+
+      # Add a GitHub status check linking to deploy preview URL (optional)
+      - name: Post status check with preview link
+        uses: Sibz/github-status-action@v1.1.1
         with:
-          publish-dir: target/generated-docs
-          production-deploy: false
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          deploy-message: "Deploy from GitHub Actions"
-          enable-pull-request-comment: true
-          enable-commit-comment: true
-          overwrites-pull-request-comment: true
+          authToken: ${{ secrets.GITHUB_TOKEN }}
+          context: Netlify Preview Deploy
+          state: success
+          target_url: ${{ env.NETLIFY_PREVIEW_URL }}
