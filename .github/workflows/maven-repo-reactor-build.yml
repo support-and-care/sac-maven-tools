@@ -25,7 +25,7 @@ permissions:
   packages: read
   issues: read
   pull-requests: read
-  contents: read
+  contents: write
   
 jobs:
   maven-all-projects-build:
@@ -285,3 +285,46 @@ jobs:
           name: build-logs-jqa-analyze
           path: logs
 
+  deploy-to-netlify:
+    name: 'Deploy to Netlify Preview'
+    runs-on: self-hosted
+    if: github.ref != 'refs/heads/main'
+    needs: maven-jqa-analyze
+
+    steps:
+      - uses: actions/checkout@v3
+
+      # Netlify needs NPM/Node
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Verify npm installation
+        run: npm --version
+
+      - name: Download generated documentation
+        uses: actions/download-artifact@v4
+        with:
+          name: generated-docs
+          path: target/generated-docs
+
+      # Sets the branch name as an environment variable
+      - uses: nelonoel/branch-name@v1.0.1
+
+      - name: Deploy to Netlify
+        uses: nwtgck/actions-netlify@v3.0
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+          NETLIFY_DEPLOY_TO_PROD: false
+          NETLIFY_DEPLOY_MESSAGE: "Preview deploy from GitHub Actions"
+          BRANCH: ${{ env.BRANCH_NAME }}
+        with:
+          publish-dir: target/generated-docs
+          production-deploy: false
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          deploy-message: "Deploy from GitHub Actions"
+          enable-pull-request-comment: true
+          enable-commit-comment: true
+          overwrites-pull-request-comment: true
