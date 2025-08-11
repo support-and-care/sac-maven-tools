@@ -28,17 +28,18 @@ ORDER BY Repository, Id DESC
     <constraint id="apache-maven-constraints:AvoidPlexusContainer" severity="major">
         <description>No component must directly use Plexus Container</description>
         <cypher><![CDATA[
-MATCH (p:Maven:Project)
+MATCH (s:Maven:Project)
         -[:CREATES]->
       (a:Maven:Artifact)
-        -[:DEPENDS_ON]->
-      (d {group: 'org.codehaus.plexus', name: 'plexus-container-default'})
+        -[d:DEPENDS_ON]->
+      (t {group: 'org.codehaus.plexus', name: 'plexus-container-default'})
 RETURN DISTINCT
-  p.groupId AS srcGroup,
-  p.artifactId AS srcArtifact,
-  d.version AS tgtVersion,
-  d.group AS tgtGroup,
-  d.name AS tgtArtifact
+  s.groupId AS srcGroup,
+  s.artifactId AS srcArtifact,
+  t.version AS tgtVersion,
+  t.group AS tgtGroup,
+  t.name AS tgtArtifact,
+  d.scope AS depScope
         ]]></cypher>
     </constraint>
 
