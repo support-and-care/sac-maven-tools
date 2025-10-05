@@ -5,7 +5,7 @@ jqassistant:
       version: 0.2.0-SNAPSHOT
     - group-id: de.kontext-e.jqassistant.plugin
       artifact-id: jqassistant.plugin.git
-      version: 2.5.0-SNAPSHOT
+      version: 2.4.0
   scan:
     continue-on-error: true
     properties:
