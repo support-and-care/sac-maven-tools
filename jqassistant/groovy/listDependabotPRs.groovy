@@ -6,7 +6,7 @@ File output = new File(reportDirectory, "open-dependabot-PRs.adoc")
 output.delete()
 output.append("""= Open DependaBot PRs
 
-The following projects have open Pull-Requests from DependaBot.
+The following projects have open Pull-Requests from DependaBot as of ${new Date()}.
 
 [cols="8,1", options="header"]
 |===
