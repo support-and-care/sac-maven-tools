@@ -3,7 +3,7 @@ name: Run Maven build of all components
 on:
   schedule:
     # only runs on the main branch (see below)
-    - cron: '0 3 * * *'
+    - cron: '0 21 * * *'
   push:
   workflow_dispatch:
     inputs:
