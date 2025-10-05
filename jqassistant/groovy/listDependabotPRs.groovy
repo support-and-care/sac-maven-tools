@@ -8,9 +8,9 @@ output.append("""= Open DependaBot PRs
 
 The following projects have open Pull-Requests from DependaBot as of ${new Date()}.
 
-[cols="8,1", options="header"]
+[cols="8,3,1", options="header"]
 |===
-| Title | Id
+| Title | Date | Id
 
 """)
 
@@ -20,9 +20,9 @@ result.rows.each {row ->
     def url = row.columns['URL'].value
     if (repository != currentRepository) {
         currentRepository = repository
-        output.append("2+| *${url}/pulls/dependabot%5Bbot%5D[${currentRepository}]* ")
+        output.append("3+| *${url}/pulls/dependabot%5Bbot%5D[${currentRepository}]* ")
     }
-    output.append("| ${row.columns['Title'].value} | ${url}/pull/${row.columns['Id'].value}[${row.columns['Id'].value}] ")
+    output.append("| ${row.columns['Title'].value} | ${row.columns['Date'].value} | ${url}/pull/${row.columns['Id'].value}[${row.columns['Id'].value}] ")
 //    output.append("| ${row.columns['NoofOpenDependabotPRs'].value}\n")
 }
 

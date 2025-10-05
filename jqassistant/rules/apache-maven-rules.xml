@@ -16,9 +16,10 @@ MATCH (r:GitHub:Repository)
 RETURN r.name as Repository,
        r.uri as URL,
        n.title as Title,
-       n.number as Id
+       n.number as Id,
+       n.updatedAt as Date
 // ORDER BY NoofOpenDependabotPRs DESC
-ORDER BY Repository, Id DESC
+ORDER BY Repository, Date DESC
         ]]></cypher>
         <report type="Groovy">
             <property name="scriptname">jqassistant/groovy/listDependabotPRs.groovy</property>
