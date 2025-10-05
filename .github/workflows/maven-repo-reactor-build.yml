@@ -41,7 +41,7 @@ jobs:
       GITHUB_LOGIN: ${{ github.repository_owner }}
       GITHUB_TOKEN: ${{ github.token }}
       GITHUB_OAUTH: ${{ github.token }}
-      PROJECTS: 'shared/reporting-api shared/mapping shared/shared-incremental shared/shared-resources'
+      PROJECTS: 'plugins/core/maven-install-plugin shared/reporting-api shared/mapping shared/shared-incremental shared/shared-resources'
       ACTIONS_RUNNER_DEBUG: ${{ github.event.inputs.debug }}
       ACTIONS_STEP_DEBUG: ${{ github.event.inputs.debug }}
 

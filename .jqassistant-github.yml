@@ -22,7 +22,7 @@ jqassistant:
 #        - github:repository::https://github.com/apache/maven-clean-plugin
 #        - github:repository::https://github.com/apache/maven-compiler-plugin
 #        - github:repository::https://github.com/apache/maven-deploy-plugin
-#        - github:repository::https://github.com/apache/maven-install-plugin
+        - github:repository::https://github.com/apache/maven-install-plugin
 #        - github:repository::https://github.com/apache/maven-resources-plugin
 #        - github:repository::https://github.com/apache/maven-site-plugin
 #        - github:repository::https://github.com/apache/maven-surefire
