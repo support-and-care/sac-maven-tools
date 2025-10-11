@@ -32,7 +32,7 @@ jobs:
     # Run the job if:
     # - It's triggered via schedule, only if on the main branch
     # - Or if it's triggered by a push (any branch) or workflow_dispatch (any branch)
-    if: ${{ github.event_name != 'schedule' || github.ref == 'refs/heads/main' }}
+#    if: ${{ github.event_name != 'schedule' || github.ref == 'refs/heads/main' }}
     runs-on: self-hosted
 
     env:
@@ -117,7 +117,7 @@ jobs:
     # Run the job if:
     # - It's triggered via schedule, only if on the main branch
     # - Or if it's triggered by a push (any branch) or workflow_dispatch (any branch)
-    if: ${{ github.event_name != 'schedule' || github.ref == 'refs/heads/main' }}
+#    if: ${{ github.event_name != 'schedule' || github.ref == 'refs/heads/main' }}
     runs-on: self-hosted
     needs: maven-all-projects-build
 
@@ -203,7 +203,7 @@ jobs:
     # Run the job if:
     # - It's triggered via schedule, only if on the main branch
     # - Or if it's triggered by a push (any branch) or workflow_dispatch (any branch)
-    if: ${{ github.event_name != 'schedule' || github.ref == 'refs/heads/main' }}
+#    if: ${{ github.event_name != 'schedule' || github.ref == 'refs/heads/main' }}
     runs-on: self-hosted
     needs: maven-jqa-github-scan
 
