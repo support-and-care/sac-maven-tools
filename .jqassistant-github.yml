@@ -44,7 +44,6 @@ jqassistant:
         - github:repository::https://github.com/apache/maven-javadoc-plugin
         - github:repository::https://github.com/apache/maven-jdeps-plugin
         - github:repository::https://github.com/apache/maven-jxr
-        - github:repository::https://github.com/apache/maven-linkcheck-plugin
         - github:repository::https://github.com/apache/maven-pmd-plugin
         - github:repository::https://github.com/apache/maven-project-info-reports-plugin
         - github:repository::https://github.com/apache/maven-antrun-plugin
@@ -97,7 +96,6 @@ jqassistant:
         - github:repository::https://github.com/apache/maven-parent
         - github:repository::https://github.com/apache/maven-apache-parent
         - github:repository::https://github.com/apache/maven-apache-resources
-        - github:repository::https://github.com/apache/maven-default-skin
         - github:repository::https://github.com/apache/maven-fluido-skin
         - github:repository::https://github.com/apache/maven-dist-tool
         - github:repository::https://github.com/apache/maven-gh-actions-shared
@@ -109,7 +107,6 @@ jqassistant:
         - github:repository::https://github.com/apache/maven-studies
 
         - github:repository::https://github.com/apache/maven-repository-tools
-        - github:repository::https://github.com/apache/maven-sandbox
         - github:repository::https://github.com/apache/maven-doxia-ide
 
         - github:repository::https://github.com/codehaus-plexus/codehaus-plexus.github.io
