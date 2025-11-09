@@ -59,6 +59,7 @@ jqassistant:
         - github:repository::https://github.com/apache/maven-jdeprscan-plugin
         - github:repository::https://github.com/apache/maven-plugin-tools
         - github:repository::https://github.com/apache/maven-release
+        - github:repository::https://github.com/apache/maven-remote-resources-plugin
         - github:repository::https://github.com/apache/maven-scm
         - github:repository::https://github.com/apache/maven-scm-publish-plugin
         - github:repository::https://github.com/apache/maven-scripting-plugin
