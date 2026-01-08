@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Maven Support & Care Tools - an automation toolkit for managing, building, and analyzing the Apache Maven multi-repository ecosystem. Uses the `repo` tool to manage 100+ Apache Maven repositories (manifest hosted at [maven-sources](https://github.com/apache/maven-sources)). Repositories are checked out directly into this directory with `.repo` at the root.
+Maven Support & Care Tools - an automation toolkit for managing, building, and analyzing the Apache Maven multi-repository ecosystem. Uses the `repo` tool to manage 100+ Apache Maven repositories (manifest hosted at [maven-sources](https://github.com/apache/maven-sources)). Repositories are checked out into the `./maven` directory (a symlink to external storage) with `.repo` at `maven/.repo`.
 
 ## Prerequisites
 
@@ -20,11 +20,11 @@ Maven Support & Care Tools - an automation toolkit for managing, building, and a
 # Initialize and sync repositories from maven-sources manifest
 ./bin/repo-start
 
-# Execute command across all repos
-repo forall -c "${PWD}/bin/gh-subscribe"
+# Execute command across all repos (from maven/ directory)
+cd maven && repo forall -c "${PWD}/../bin/gh-subscribe"
 
 # Execute on subset (by group)
-repo forall -r 'core' -c "${PWD}/bin/some-script"
+cd maven && repo forall -r 'core' -c "${PWD}/../bin/some-script"
 ```
 
 ### Building Projects
@@ -77,7 +77,8 @@ USE_DEVELOCITY=true ./bin/run-maven clean install
 
 | Variable | Description | Default |
 |----------|-------------|---------|
-| `PROJECTS` | Space-separated list of project paths | Contents of `.repo/project.list` |
+| `MAVEN_PROJECTS_DIR` | Directory containing Maven project checkouts | `maven` |
+| `PROJECTS` | Space-separated list of project paths | Contents of `${MAVEN_PROJECTS_DIR}/.repo/project.list` |
 | `USE_DEVELOCITY` | Enable Develocity build scans | `false` |
 | `FAIL_FAST` | Exit on first build failure | `false` |
 | `PREVIEW_LOGLINES` | Lines of log to show on failure | `0` |

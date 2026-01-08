@@ -116,7 +116,7 @@ jqa_common_opts() {
   local extension="${1:-}"
   echo "
     ${MVN_OPTS:-}
-    -Dmaven.repo.local=${root}/.m2/repository
+    ${MAVEN_REPO_LOCAL_OPT}
     -Djqassistant.maven.reuse-store=false
     -Djqassistant.store.uri=${store_uri}
     -Djqassistant.configuration.locations=${root}/.jqassistant${extension}.yml

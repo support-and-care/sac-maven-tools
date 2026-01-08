@@ -39,7 +39,7 @@ fi
 dir=$(dirname "${0}")
 source "${dir}/common-functions.sh"
 
-opts="-Dmaven.repo.local=${root}/.m2/repository"
+opts="${MAVEN_REPO_LOCAL_OPT}"
 
 goals="${*}"
 

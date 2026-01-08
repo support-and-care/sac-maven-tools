@@ -5,6 +5,11 @@ set -eu -o pipefail
 : "${GITHUB_ORGANIZATION:=unknown}"
 : "${WORKING_BRANCH:=master}"
 : "${BRANCH:=$(git branch --show-current)}"
+: "${MAVEN_PROJECTS_DIR:=maven}"
+
+# Change to maven projects directory (create if it doesn't exist)
+[[ -e "${MAVEN_PROJECTS_DIR}" ]] || mkdir -p "${MAVEN_PROJECTS_DIR}"
+cd "${MAVEN_PROJECTS_DIR}"
 
 # Use latest repo if available
 PATH=".repo/repo:${PATH}"

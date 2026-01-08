@@ -3,6 +3,10 @@
 set -eu -o pipefail
 
 : "${BRANCH:=$(git branch --show-current)}"
+: "${MAVEN_PROJECTS_DIR:=maven}"
+
+# Change to maven projects directory
+cd "${MAVEN_PROJECTS_DIR}"
 
 # THIS IS REALLY A UGLY HACK - DO NOT USE IT IN PRODUCTION - ITS JUST A SHOWCASE
 declare -A branches

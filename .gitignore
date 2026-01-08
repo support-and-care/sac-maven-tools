@@ -1,20 +1,8 @@
 .idea/
-# Maven directories
-core/
-doxia/
-misc/
-plexus/
-plugins/
-shared/
-sisu/
-site/
-sources/
-studies/
-svn/
+# Maven directories (new location via symlink)
+maven
 # Our stuff
-.repo/
 .envrc*
-.m2/repository/
 .sdkmanrc
 jqassistant/store*
 logs/*
