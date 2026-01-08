@@ -18,7 +18,7 @@ jobs:
     # - It's triggered via schedule, only if on the main branch
     # - Or if it's triggered by a push (any branch) or workflow_dispatch (any branch)
     if: ${{ github.event_name != 'schedule' || github.ref == 'refs/heads/main' }}
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
 
     strategy:
       fail-fast: false
