@@ -8,6 +8,10 @@ jqassistant:
       version: 2.4.0
   scan:
     continue-on-error: true
+    # We need this with the Maven scanner as it only scans target/ by default
+    include:
+      files:
+        - .git
     properties:
       directory.follow-symbolic-links: true
       maven3.dependencies.scan: true
