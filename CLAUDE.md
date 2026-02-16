@@ -82,8 +82,8 @@ USE_DEVELOCITY=true ./bin/run-maven clean install
 | `USE_DEVELOCITY` | Enable Develocity build scans | `false` |
 | `FAIL_FAST` | Exit on first build failure | `false` |
 | `PREVIEW_LOGLINES` | Lines of log to show on failure | `0` |
-| `JQA_VERSION` | jQAssistant plugin version | `2.6.0` |
 | `SETTINGS` | Maven settings file path | `${PWD}/settings.xml` |
+| `JQA_VERSION` | jQAssistant plugin version | `2.9.0`                                                |
 
 ### Build Logs
 
