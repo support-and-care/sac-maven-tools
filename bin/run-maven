@@ -48,7 +48,12 @@ trap '/bin/rm -rf "${tmpdir}"' EXIT
 
 export TMPDIR="${tmpdir}"
 
-for project in ${PROJECTS}; do
-  counter=$((counter + 1))
-  exec_mvn "${project}" "${goals// /-}" "${counter}" "${opts}" "${goals}"
-done
+mkdir -p "${root}/logs"
+overall_log="${root}/logs/run-maven-${goals// /-}-$$.log"
+
+{
+  for project in ${PROJECTS}; do
+    counter=$((counter + 1))
+    exec_mvn "${project}" "${goals// /-}" "${counter}" "${opts}" "${goals}"
+  done
+} 2>&1 | tee "${overall_log}"

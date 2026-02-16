@@ -131,7 +131,20 @@ jqa_scan_opts="
 #  -Djqassistant.use-execution-root-as-project-root=false
 
 jqa="com.buschmais.jqassistant:jqassistant-maven-plugin:${JQA_VERSION}"
-for opt in "${@:=scan}"; do
+
+mkdir -p "${root}/logs"
+# Sanitize arguments for log filename (remove characters invalid in filenames)
+log_suffix="${*// /-}"
+log_suffix="${log_suffix//[:\/]/_}"
+overall_log="${root}/logs/run-jqa-${log_suffix}-$$.log"
+
+# Default to "scan" if no arguments provided
+if [[ $# -eq 0 ]]; then
+  set -- scan
+  overall_log="${root}/logs/run-jqa-scan-$$.log"
+fi
+
+{
   case "${opt}" in
   reset | server | analyze | list-plugins | list-rules | list-constraints | list-queries | report | effective-configuration | effective-rules)
     # shellcheck disable=SC2086
@@ -154,3 +167,4 @@ for opt in "${@:=scan}"; do
     ;;
   esac
 done
+} 2>&1 | tee "${overall_log}"
