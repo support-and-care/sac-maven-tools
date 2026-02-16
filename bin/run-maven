@@ -51,9 +51,13 @@ export TMPDIR="${tmpdir}"
 mkdir -p "${root}/logs"
 overall_log="${root}/logs/run-maven-${goals// /-}-$$.log"
 
+# Individual build failures are handled by exec_mvn (logged + reported).
+# The loop must not propagate those failures to the script exit code.
+set +e
 {
   for project in ${PROJECTS}; do
     counter=$((counter + 1))
     exec_mvn "${project}" "${goals// /-}" "${counter}" "${opts}" "${goals}"
   done
 } 2>&1 | tee "${overall_log}"
+set -e
