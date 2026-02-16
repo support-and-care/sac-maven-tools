@@ -53,7 +53,7 @@ USE_DEVELOCITY=true ./bin/run-maven clean install
 ./bin/run-jqa analyze
 
 # Use remote Neo4j (bolt protocol)
-./bin/run-jqa -r scan
+./bin/run-jqa -r bolt://localhost:7687 scan
 
 # Other commands
 ./bin/run-jqa list-rules
@@ -93,7 +93,7 @@ All Maven execution output goes to `logs/<project>/<task>-<pid>-<counter>.log`. 
 
 Uses Neo4j graph database to analyze code structure across all Maven projects:
 
-- **Store location**: `jqassistant/store/` (file-based) or `bolt://localhost:7687` (remote)
+- **Central store mode** (default): `jqassistant/store/` or `bolt://localhost:7687` (remote with `-r`)
 - **Rules**: `jqassistant/rules/apache-maven-rules.xml`
 - **Config**: `.jqassistant.yml` (includes Git plugin for repository analysis)
 

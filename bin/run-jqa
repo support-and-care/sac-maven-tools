@@ -19,14 +19,15 @@ fi
 #     This script is intended to streamline jQA operations by offering pre-defined execution logic and configurable
 #     options.
 #
-#     By default, a local store URI is used (`file://${root}/jqassistant/store`). The `-r` option allows switching
-#     to a Neo4j Bolt store (`bolt://localhost:7687`).
+#     By default, a local store URI is used (`file://${root}/jqassistant/store`). The `-r <uri>` option allows
+#     switching to a remote store (e.g., `bolt://localhost:7687`).
 #
 #     This script supports various jQAssistant commands like `scan`, `analyze`, `list-rules`, and more. Additionally,
 #     it can process scan operations on multiple projects sequentially when `PROJECTS` is defined.
 #
 # OPTIONS
-#   -r      Switch the jQAssistant store URI to a Neo4j Bolt connection (default: `file://${root}/jqassistant/store`).
+#   -r <uri>  Set the jQAssistant store URI to a remote connection, e.g., `bolt://localhost:7687`
+#             (default: `file://${root}/jqassistant/store`).
 #
 #   [jQAssistant goals/commands...]
 #           Specifies one or more jQAssistant commands to be executed. Supported commands include:
@@ -55,7 +56,7 @@ fi
 #       run-jqa reset scan
 #
 #   To scan projects with a Neo4j Bolt store (start with `run-jqa server`):
-#       run-jqa -r scan
+#       run-jqa -r bolt://localhost:7687 scan
 #
 #   To scan Maven GitHub repositories
 #       run-jqa github
@@ -92,10 +93,10 @@ store_uri="file://${store_directory}"
 use_remote_store=false
 
 # Use getopts for classic shell-style option parsing
-while getopts "r" opt; do
+while getopts "r:" opt; do
   case ${opt} in
   r)
-    store_uri="bolt://localhost:7687"
+    store_uri="${OPTARG}"
     use_remote_store=true
     ;;
   \?)
