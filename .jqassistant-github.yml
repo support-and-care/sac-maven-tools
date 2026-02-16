@@ -66,7 +66,6 @@ jqassistant:
         - github:repository::https://github.com/apache/maven-stage-plugin
         - github:repository::https://github.com/apache/maven-toolchains-plugin
         - github:repository::https://github.com/apache/maven-archiver
-        - github:repository::https://github.com/apache/maven-artifact-transfer
         - github:repository::https://github.com/apache/maven-common-artifact-filters
         - github:repository::https://github.com/apache/maven-dependency-analyzer
         - github:repository::https://github.com/apache/maven-dependency-tree
@@ -75,7 +74,6 @@ jqassistant:
         - github:repository::https://github.com/apache/maven-invoker
         - github:repository::https://github.com/apache/maven-jarsigner
         - github:repository::https://github.com/apache/maven-mapping
-        - github:repository::https://github.com/apache/maven-project-utils
         - github:repository::https://github.com/apache/maven-reporting-api
         - github:repository::https://github.com/apache/maven-reporting-exec
         - github:repository::https://github.com/apache/maven-reporting-impl
@@ -90,9 +88,7 @@ jqassistant:
         - github:repository::https://github.com/apache/maven-doxia-site
         - github:repository::https://github.com/apache/maven-doxia-sitetools
         - github:repository::https://github.com/apache/maven-doxia-book-maven-plugin
-        - github:repository::https://github.com/apache/maven-doxia-book-renderer
         - github:repository::https://github.com/apache/maven-doxia-converter
-        - github:repository::https://github.com/apache/maven-doxia-linkcheck
         - github:repository::https://github.com/apache/maven-archetypes
         - github:repository::https://github.com/apache/maven-parent
         - github:repository::https://github.com/apache/maven-apache-parent
@@ -106,7 +102,6 @@ jqassistant:
         - github:repository::https://github.com/apache/maven-plugin-testing
         - github:repository::https://github.com/apache/maven-wagon
         - github:repository::https://github.com/apache/maven-studies
-
         - github:repository::https://github.com/apache/maven-repository-tools
         - github:repository::https://github.com/apache/maven-doxia-ide
 
@@ -114,21 +109,15 @@ jqassistant:
         - github:repository::https://github.com/codehaus-plexus/modello
         - github:repository::https://github.com/codehaus-plexus/plexus-classworlds
         - github:repository::https://github.com/codehaus-plexus/plexus-archiver
-        - github:repository::https://github.com/codehaus-plexus/plexus-cipher
-        - github:repository::https://github.com/codehaus-plexus/plexus-cli
         - github:repository::https://github.com/codehaus-plexus/plexus-compiler
-        - github:repository::https://github.com/codehaus-plexus/plexus-digest
         - github:repository::https://github.com/codehaus-plexus/plexus-i18n
-        - github:repository::https://github.com/codehaus-plexus/plexus-interactivity.git'
-        - github:repository::https://github.com/codehaus-plexus/plexus-interpolation.git'
+        - github:repository::https://github.com/codehaus-plexus/plexus-interactivity
+        - github:repository::https://github.com/codehaus-plexus/plexus-interpolation
         - github:repository::https://github.com/codehaus-plexus/plexus-io
         - github:repository::https://github.com/codehaus-plexus/plexus-languages
         - github:repository::https://github.com/codehaus-plexus/plexus-resources
         - github:repository::https://github.com/codehaus-plexus/plexus-sec-dispatcher
-        - github:repository::https://github.com/codehaus-plexus/plexus-swizzle
         - github:repository::https://github.com/codehaus-plexus/plexus-velocity
-        - github:repository::https://github.com/codehaus-plexus/plexus-containers
-        - github:repository::https://github.com/codehaus-plexus/plexus-components
         - github:repository::https://github.com/codehaus-plexus/plexus-pom
         - github:repository::https://github.com/codehaus-plexus/plexus-testing
         - github:repository::https://github.com/codehaus-plexus/plexus-utils
