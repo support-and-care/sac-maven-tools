@@ -41,6 +41,69 @@
 : "${ONLY_MAVEN:=true}"
 : "${MAVEN_PROJECTS_DIR:=maven}"
 : "${SETTINGS:=${PWD}/settings.xml}"
+# Find a Maven binary by version, searching known installation locations.
+# Checks (in order): SDKman, GitHub Actions tool-cache, MAVEN_HOMES (custom).
+# Returns the path to the mvn binary, or empty string if not found.
+find_mvn_by_version() {
+  local version="$1"
+  local candidate
+
+  # SDKman (local development)
+  candidate="${HOME}/.sdkman/candidates/maven/${version}/bin/mvn"
+  if [[ -x "${candidate}" ]]; then
+    echo "${candidate}"
+    return
+  fi
+
+  # GitHub Actions tool-cache (stCarolas/setup-maven)
+  if [[ -n "${RUNNER_TOOL_CACHE:-}" ]]; then
+    candidate="${RUNNER_TOOL_CACHE}/maven/${version}/x64/bin/mvn"
+    if [[ -x "${candidate}" ]]; then
+      echo "${candidate}"
+      return
+    fi
+  fi
+
+  # Custom location via MAVEN_HOMES (colon-separated list of base dirs)
+  # Each dir is expected to contain <version>/bin/mvn
+  local IFS=':'
+  for base in ${MAVEN_HOMES:-}; do
+    candidate="${base}/${version}/bin/mvn"
+    if [[ -x "${candidate}" ]]; then
+      echo "${candidate}"
+      return
+    fi
+  done
+}
+
+# Select the appropriate Maven binary based on project path.
+# Maven 4 projects are identified by having "-4/" in their path
+# (e.g. plugins/core-4/*, plugins/packaging-4/*).
+# The required Maven version is read from <mavenVersion> in pom.xml.
+# MAVEN4_VERSION env var can override the auto-detected version.
+select_mvn() {
+  local project="$1"
+  local project_dir="$2"
+  if [[ "${project}" == *-4/* ]]; then
+    local mvn4_version="${MAVEN4_VERSION:-}"
+    if [[ -z "${mvn4_version}" && -r "${project_dir}/pom.xml" ]]; then
+      mvn4_version=$(sed -n 's/.*<mavenVersion>\(.*\)<\/mavenVersion>.*/\1/p' "${project_dir}/pom.xml" | head -1)
+    fi
+    if [[ -z "${mvn4_version}" ]]; then
+      echo "WARNING: ${project}: no <mavenVersion> found in pom.xml and MAVEN4_VERSION not set, falling back to system mvn" >&2
+      echo "mvn"
+      return
+    fi
+    local mvn4_bin
+    mvn4_bin=$(find_mvn_by_version "${mvn4_version}")
+    if [[ -n "${mvn4_bin}" ]]; then
+      echo "${mvn4_bin}"
+      return
+    fi
+    echo "WARNING: ${project}: Maven ${mvn4_version} not found in any known location, falling back to system mvn" >&2
+  fi
+  echo "mvn"
+}
 
 # shellcheck disable=SC2034 disable=SC2154
 # root is used in other scripts, dir is injected by the caller
@@ -87,15 +150,22 @@ exec_mvn() {
     ;;
   esac
 
-  mvn="mvn"
-  with="with"
+  mvn_info=""
   if test -r "${project_dir}/mvnw"; then
     mvn="./mvnw"
+    mvn_info="with wrapper"
   else
-    with="without"
+    mvn=$(select_mvn "${project}" "${project_dir}")
+    if [[ "${mvn}" != "mvn" ]]; then
+      local detected_version
+      detected_version=$(echo "${mvn}" | sed 's|.*/maven/\([^/]*\)/.*|\1|')
+      mvn_info="without wrapper (using Maven ${detected_version})"
+    else
+      mvn_info="without wrapper"
+    fi
   fi
   logs="${root}/logs/${project}/${task}-$$-${counter}.log"
-  echo -n "${project} (${counter}/${noof_projects}), a Maven project ${with} wrapper, build (logs: '${logs}') "
+  echo -n "${project} (${counter}/${noof_projects}), a Maven project ${mvn_info}, build (logs: '${logs}') "
   set +e
   (
     cd "${project_dir}"

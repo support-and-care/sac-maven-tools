@@ -46,12 +46,34 @@ jobs:
       ACTIONS_STEP_DEBUG: ${{ github.event.inputs.debug }}
 
     steps:
-      - name: Setup Maven
+      - name: Setup Maven 3 (default) + Java + Checkout
         uses: s4u/setup-maven-action@v1.18.0
         with:
           java-version: "21"
           java-distribution: "zulu"
-          maven-version: "3.9.11"
+          maven-version: "3.9.12"
+
+      - name: Setup Maven 4.0.0-beta-3 versions (for -4/ projects)
+        uses: stCarolas/setup-maven@v5
+        with:
+          maven-version: "4.0.0-beta-3"
+      - name: Setup Maven 4.0.0-rc-3 versions (for -4/ projects)
+        uses: stCarolas/setup-maven@v5
+        with:
+          maven-version: "4.0.0-rc-3"
+      - name: Setup Maven 4.0.0-rc-4 versions (for -4/ projects)
+        uses: stCarolas/setup-maven@v5
+        with:
+          maven-version: "4.0.0-rc-4"
+      - name: Setup Maven 4.0.0-rc-5 versions (for -4/ projects)
+        uses: stCarolas/setup-maven@v5
+        with:
+          maven-version: "4.0.0-rc-5"
+
+      - name: Restore Maven 3 on PATH
+        uses: stCarolas/setup-maven@v5
+        with:
+          maven-version: "3.9.12"
 
       - name: Show current Maven version
         run: mvn --version
