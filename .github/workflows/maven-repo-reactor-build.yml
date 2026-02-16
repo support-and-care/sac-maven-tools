@@ -94,9 +94,6 @@ jobs:
       - name: Initialize repo
         run: ./bin/repo-start
 
-      - name: Switch to special branches
-        run: ./bin/repo-checkout-specific-branches
-
       - name: Build with Maven
         env:
           USE_DEVELOCITY: true
@@ -180,9 +177,6 @@ jobs:
       - name: Initialize repo
         run: ./bin/repo-start
 
-      - name: Switch to special branches
-        run: ./bin/repo-checkout-specific-branches
-
       - name: Download jqassistant/store artifact
         uses: actions/download-artifact@v4
         with:
@@ -265,9 +259,6 @@ jobs:
 
       - name: Initialize repo
         run: ./bin/repo-start
-
-      - name: Switch to special branches
-        run: ./bin/repo-checkout-specific-branches
 
       - name: Download jqassistant/store artifact
         uses: actions/download-artifact@v4

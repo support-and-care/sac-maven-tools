@@ -3,7 +3,6 @@
 set -eu -o pipefail
 
 : "${GITHUB_ORGANIZATION:=unknown}"
-: "${WORKING_BRANCH:=master}"
 : "${BRANCH:=$(git branch --show-current)}"
 : "${MAVEN_PROJECTS_DIR:=maven}"
 
@@ -21,4 +20,8 @@ repo init \
 hash -r
 
 repo sync
-repo start "${WORKING_BRANCH}" --all
+
+# Start each project on its manifest-specified branch (REPO_RREV).
+# Projects with a custom 'revision' attribute get their own branch,
+# others get the manifest default.
+repo forall -c 'repo start "${REPO_RREV}" .'
