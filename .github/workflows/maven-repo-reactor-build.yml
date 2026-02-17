@@ -98,13 +98,13 @@ jobs:
         env:
           USE_DEVELOCITY: true
           PREVIEW_LOGLINES: 50
-        run: ./bin/run-maven clean install -fae -Dsurefire.rerunFailingTestsCount=2 2>&1 | tee logs/maven-log
+        run: ./bin/run-maven clean install -fae -Dsurefire.rerunFailingTestsCount=2
 
       - name: Run jQAssistant Scan
         env:
           USE_DEVELOCITY: true
           PREVIEW_LOGLINES: 50
-        run: ./bin/run-jqa scan 2>&1 | tee logs/jqa-scan.log
+        run: ./bin/run-jqa scan
 
       - name: Upload jqassistant/store artifact
         uses: actions/upload-artifact@v4
@@ -187,7 +187,7 @@ jobs:
         env:
           USE_DEVELOCITY: true
           PREVIEW_LOGLINES: 50
-        run: ./bin/run-jqa github 2>&1 | tee logs/jqa-github.log
+        run: ./bin/run-jqa github
 
       - name: Upload jqassistant/store artifact
         uses: actions/upload-artifact@v4
@@ -270,7 +270,7 @@ jobs:
         env:
           USE_DEVELOCITY: true
           PREVIEW_LOGLINES: 50
-        run: ./bin/run-jqa analyze 2>&1 | tee logs/jqa-analyze.log
+        run: ./bin/run-jqa analyze
 
       - name: Upload generated documentation
         uses: actions/upload-artifact@v4

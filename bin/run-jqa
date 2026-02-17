@@ -145,6 +145,8 @@ if [[ $# -eq 0 ]]; then
   overall_log="${root}/logs/run-jqa-scan-$$.log"
 fi
 
+opt="${1}"
+
 {
   case "${opt}" in
   reset | server | analyze | list-plugins | list-rules | list-constraints | list-queries | report | effective-configuration | effective-rules)
@@ -167,5 +169,4 @@ fi
     exit 1
     ;;
   esac
-done
 } 2>&1 | tee "${overall_log}"
